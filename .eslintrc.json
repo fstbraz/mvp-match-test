@@ -14,12 +14,10 @@
       ],
       "rules": {
         "@angular-eslint/directive-selector": [
-          "error",
-          {
-            "type": "attribute",
-            "prefix": "app",
-            "style": "camelCase"
-          }
+          "off"
+        ],
+        "@angular-eslint/no-host-metadata-property": [
+          "off"
         ],
         "@angular-eslint/component-selector": [
           "error",
