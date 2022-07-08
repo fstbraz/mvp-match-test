@@ -1,0 +1,26 @@
+:host {
+  display: flex;
+}
+
+.avatar {
+  border-radius: 5px;
+  background-color: #f6ca65;
+  width: 43px;
+  height: 43px;
+  display: flex;
+  justify-content: center;
+  line-height: 43px;
+  color: #ffffff;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 23px;
+}
+
+.name {
+  font-weight: 700;
+  font-style: normal;
+  font-size: 16px;
+  color: #005b96;
+  margin: 0 0 0 11px;
+  line-height: 43px;
+}

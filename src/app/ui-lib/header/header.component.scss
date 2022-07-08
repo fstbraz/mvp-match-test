@@ -1,0 +1,23 @@
+.navbar {
+  height: 80px;
+  display: flex;
+  border-bottom: 2px solid #f3f6f9;
+
+  .logo {
+    cursor: pointer;
+    padding: 21px 0 0 35px;
+    height: 40px;
+    width: 27px;
+  }
+
+  .hamburguer {
+    cursor: pointer;
+    padding: 28px 0 0 38px;
+    height: 23px;
+    width: 31px;
+  }
+
+  app-avatar {
+    margin: auto 100px auto auto;
+  }
+}

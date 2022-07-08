@@ -1,0 +1,96 @@
+<div class="container">
+  <div class="title">
+    <h2>Reports</h2>
+    <h4>Easily generate a report of your transactions</h4>
+  </div>
+  <div class="actions">
+    <button [dropdownTrigger]="projectsdropdown" class="button projects">
+      <span class="text">{{
+        getDropDownName("Select project", "All projects", chosenProject)
+      }}</span>
+      <img class="chevron" alt="Open Dropdown" src="assets/svg/chevron.svg" />
+    </button>
+    <button [dropdownTrigger]="gatewaydropdown" class="button gateways">
+      <span class="text">{{
+        getDropDownName("Select gateway", "All gateways", chosenGateway)
+      }}</span>
+      <img class="chevron" alt="Open Dropdown" src="assets/svg/chevron.svg" />
+    </button>
+    <button
+      (click)="generateReport()"
+      [disabled]="!chosenGateway || !chosenProject"
+      class="button generate"
+    >
+      <span class="text">Generate report</span>
+    </button>
+  </div>
+</div>
+
+<app-accordion [accordionData]="accordionData" [tableTemplate]="tableTemplate">
+  <app-accordion-title
+    >{{ getDropDownName("Select project", "All projects", chosenProject) }} |
+    {{
+      getDropDownName("Select gateway", "All gateways", chosenGateway)
+    }}</app-accordion-title
+  >
+</app-accordion>
+
+<app-dropdown #projectsdropdown>
+  <div class="dropdown-item" (click)="chooseProject(null)">All projects</div>
+  <ng-container *ngFor="let project of projects$ | async">
+    <div class="dropdown-item" (click)="chooseProject(project)">
+      {{ project.name }}
+    </div>
+  </ng-container>
+</app-dropdown>
+
+<app-dropdown #gatewaydropdown>
+  <div class="dropdown-item" (click)="chooseGateway(null)">All gateways</div>
+  <ng-container *ngFor="let gateway of gateways$ | async">
+    <div class="dropdown-item" (click)="chooseGateway(gateway)">
+      {{ gateway.name }}
+    </div>
+  </ng-container>
+</app-dropdown>
+
+<ng-template #allAllFilter let-items="items">
+  <div class="table">
+    <div class="table-body">
+      <div class="table-row">
+        <div class="table-cell">Date</div>
+        <div class="table-cell">Gateway</div>
+        <div class="table-cell">Transaction ID</div>
+        <div class="table-cell">Amount</div>
+      </div>
+
+      <div class="table-row" *ngFor="let item of items">
+        <div class="table-cell">{{ item.created }}</div>
+        <div class="table-cell">{{ item.gateway.name }}</div>
+        <div class="table-cell">{{ item.paymentId }}</div>
+        <div class="table-cell">
+          {{ item.amount | currency: "USD":"":"0.0-0" }} USD
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #otherFilters let-items="items">
+  <div class="table">
+    <div class="table-body">
+      <div class="table-row">
+        <div class="table-cell">Date</div>
+        <div class="table-cell">Transaction ID</div>
+        <div class="table-cell">Amount</div>
+      </div>
+
+      <div class="table-row" *ngFor="let item of items">
+        <div class="table-cell">{{ item.created }}</div>
+        <div class="table-cell">{{ item.paymentId }}</div>
+        <div class="table-cell">
+          {{ item.amount | currency: "USD":"":"0.0-0" }} USD
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,27 @@
+.container {
+  width: 100%;
+  height: calc(100% - 82px);
+  background-color: #ffffff;
+
+  .drawer {
+    width: 100px;
+    height: 100%;
+    border: none;
+
+    .inner-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .icon {
+        width: 24px;
+        height: 24px;
+        padding: 25px 0;
+
+        &:first-child {
+          padding: 41px 0 25px;
+        }
+      }
+    }
+  }
+}

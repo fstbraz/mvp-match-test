@@ -1,0 +1,14 @@
+<mat-drawer-container class="container">
+  <mat-drawer class="drawer" mode="side" opened>
+    <div class="inner-container">
+      <img alt="Nav Item 1" class="icon" src="assets/svg/icon-1.svg" />
+      <img alt="Nav Item 2" class="icon" src="assets/svg/icon-2.svg" />
+      <img alt="Nav Item 3" class="icon" src="assets/svg/icon-3.svg" />
+      <img alt="Nav Item 4" class="icon" src="assets/svg/icon-4.svg" />
+      <img alt="Nav Item 5" class="icon" src="assets/svg/icon-5.svg" />
+    </div>
+  </mat-drawer>
+  <mat-drawer-content
+    ><ng-content select="[content]"></ng-content
+  ></mat-drawer-content>
+</mat-drawer-container>
