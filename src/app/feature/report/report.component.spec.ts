@@ -84,10 +84,15 @@ describe('ReportComponent', () => {
   });
 
   beforeEach(() => {
-    spectator = createComponent();
+    spectator = createComponent({
+      detectChanges: false,
+    });
     projectsService = spectator.inject(ProjectsService);
     gatewaysService = spectator.inject(GatewaysService);
     reportService = spectator.inject(ReportService);
+    projectsService.list.andReturn(of([project]));
+    gatewaysService.list.andReturn(of([project]));
+    spectator.detectChanges();
   });
 
   it('exists', () => {

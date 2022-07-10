@@ -7,7 +7,7 @@ import { ProjectsService } from '@app/api/projects.service';
 import { ReportService } from '@app/api/report.service';
 import { AccordionData } from '@app/ui-lib/accordion/accordion.component';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { take, withLatestFrom } from 'rxjs/operators';
+import { shareReplay, take, withLatestFrom } from 'rxjs/operators';
 import {
   filterWith,
   getId,
@@ -45,8 +45,8 @@ export class ReportComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.projects$ = this.projectsService.list();
-    this.gateways$ = this.gatewaysService.list();
+    this.projects$ = this.projectsService.list().pipe(shareReplay());
+    this.gateways$ = this.gatewaysService.list().pipe(shareReplay());
   }
 
   chooseProject(project: Project | null) {
@@ -68,7 +68,13 @@ export class ReportComponent implements OnInit {
         projectId,
         gatewayId,
       })
-      .pipe(withLatestFrom(this.projects$, this.gateways$), take(1));
+      .pipe(
+        withLatestFrom(
+          this.projects$.pipe(shareReplay()),
+          this.gateways$.pipe(shareReplay())
+        ),
+        take(1)
+      );
 
     report$.subscribe(([payments, projects, gateways]) => {
       this.transformToReport(payments, projects, gateways);
