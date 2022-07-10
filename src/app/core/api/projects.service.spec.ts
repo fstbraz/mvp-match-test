@@ -1,16 +1,33 @@
-import { TestBed } from '@angular/core/testing';
-
+import { environment } from '@app/environment';
 import { ProjectsService } from './projects.service';
 
-describe('ProjectsService', () => {
-  let service: ProjectsService;
+import {
+  createHttpFactory,
+  HttpMethod,
+  SpectatorHttp,
+} from '@ngneat/spectator';
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(ProjectsService);
+describe('ProjectsService', () => {
+  let spectator: SpectatorHttp<ProjectsService>;
+
+  const createHttp = createHttpFactory({
+    service: ProjectsService,
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  beforeEach(() => (spectator = createHttp()));
+
+  it('exists', () => {
+    expect(spectator.service).toBeDefined();
+  });
+
+  it('should get the projects', () => {
+    spectator.service.list().subscribe();
+
+    const request = spectator.expectOne(
+      environment.API_URL + '/projects',
+      HttpMethod.GET
+    );
+
+    request.flush({});
   });
 });

@@ -61,17 +61,18 @@ export class ReportComponent implements OnInit {
     const projectId = getId(this.chosenProject, 'projectId');
     const gatewayId = getId(this.chosenGateway, 'gatewayId');
 
-    this.reportService
+    const report$ = this.reportService
       .create({
         from: '2021-01-01',
         to: '2021-12-31',
         projectId,
         gatewayId,
       })
-      .pipe(withLatestFrom(this.projects$, this.gateways$), take(1))
-      .subscribe(([payments, projects, gateways]) => {
-        this.transformToReport(payments, projects, gateways);
-      });
+      .pipe(withLatestFrom(this.projects$, this.gateways$), take(1));
+
+    report$.subscribe(([payments, projects, gateways]) => {
+      this.transformToReport(payments, projects, gateways);
+    });
   }
 
   getDropDownName(selectText: string, allText: string, selected: any[]) {
@@ -119,6 +120,7 @@ export class ReportComponent implements OnInit {
         : projects,
       'projectId'
     );
+
     payments = paymnentsFilteredWithProjects(payments);
 
     payments = this.mapPayment(payments, projects, gateways);

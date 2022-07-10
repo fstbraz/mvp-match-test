@@ -1,16 +1,33 @@
-import { TestBed } from '@angular/core/testing';
-
+import { environment } from '@app/environment';
 import { GatewaysService } from './gateways.service';
 
-describe('GatewaysService', () => {
-  let service: GatewaysService;
+import {
+  createHttpFactory,
+  HttpMethod,
+  SpectatorHttp,
+} from '@ngneat/spectator';
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(GatewaysService);
+describe('GatewaysService', () => {
+  let spectator: SpectatorHttp<GatewaysService>;
+
+  const createHttp = createHttpFactory({
+    service: GatewaysService,
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  beforeEach(() => (spectator = createHttp()));
+
+  it('exists', () => {
+    expect(spectator.service).toBeDefined();
+  });
+
+  it('should get the gateways', () => {
+    spectator.service.list().subscribe();
+
+    const request = spectator.expectOne(
+      environment.API_URL + '/gateways',
+      HttpMethod.GET
+    );
+
+    request.flush({});
   });
 });

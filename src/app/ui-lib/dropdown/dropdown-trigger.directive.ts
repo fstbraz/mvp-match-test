@@ -21,8 +21,7 @@ export class DropdownTriggerDirective implements OnDestroy {
   private overlayRef!: OverlayRef;
   private dropdownClosingActionsSub = Subscription.EMPTY;
 
-  @Input('dropdownTrigger')
-  public dropdownPanel!: Panel;
+  @Input('dropdownTrigger') panel!: Panel;
 
   constructor(
     private overlay: Overlay,
@@ -55,7 +54,7 @@ export class DropdownTriggerDirective implements OnDestroy {
     });
 
     const templatePortal = new TemplatePortal(
-      this.dropdownPanel.templateRef,
+      this.panel.templateRef,
       this.viewContainerRef
     );
     this.overlayRef.attach(templatePortal);
@@ -68,7 +67,7 @@ export class DropdownTriggerDirective implements OnDestroy {
   private dropdownClosingActions() {
     const backdropClick$ = this.overlayRef.backdropClick();
     const detachment$ = this.overlayRef.detachments();
-    const dropdownClosed = this.dropdownPanel.closed;
+    const dropdownClosed = this.panel.closed;
 
     return merge(backdropClick$, detachment$, dropdownClosed);
   }

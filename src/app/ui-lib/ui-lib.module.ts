@@ -1,10 +1,9 @@
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgxMaskModule } from 'ngx-mask';
 import { AccordionComponent } from './accordion/accordion.component';
 import { AvatarComponent } from './avatar/avatar.component';
 import { DrawerComponent } from './drawer/drawer.component';
@@ -27,7 +26,6 @@ import { HeaderComponent } from './header/header.component';
     CdkAccordionModule,
     MatSidenavModule,
     OverlayModule,
-    NgxMaskModule.forRoot(),
   ],
   exports: [
     AccordionComponent,
@@ -37,5 +35,6 @@ import { HeaderComponent } from './header/header.component';
     DropdownTriggerDirective,
     CommonModule,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class UiLibModule {}
